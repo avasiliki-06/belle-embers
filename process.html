@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>process</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" href="Candle icon .png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="candle.css">
+
+  <style>
+    .process-row{
+      display:flex;
+      align-items:center;
+      gap:40px;
+      margin-top:60px;
+    }
+
+    .process-row img{
+      width:200px;
+      transform:rotate(2deg);
+      box-shadow:10px 10px 0 rgba(0,0,0,.08);
+    }
+
+    .process-row.reverse{
+      flex-direction:row-reverse;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="menu">
+    <div class="menu-left">
+      <a href="index.html">🏠 home</a>
+      <a href="about.html">✨ about</a>
+    </div>
+
+    <div class="menu-right">
+     <a href="builder.html">🎀 builder</a>
+      <a href="materials.html">📦 materials</a>
+      <a href="process.html" class="active">🕯️ process</a>
+      <a href="fixes.html">🛠️ fixes</a>
+    </div>
+  </nav>
+
+  <div class="left-candle">
+    <div id="taper" class="taper-wrap">
+      <div id="flame" class="flame"></div>
+
+      <div class="ember ember-one"></div>
+      <div class="ember ember-two"></div>
+      <div class="ember ember-three"></div>
+      <div class="ember ember-four"></div>
+
+      <img src="Candle drawing.svg" class="candle-img" alt="candle drawing">
+      <div id="flameHalo" class="flame-halo"></div>
+    </div>
+  </div>
+
+  <main class="wall">
+    <h1 class="title">process</h1>
+
+    <p class="intro">
+      Making a candle is a slow process. Each step affects the final burn, scent, and surface.
+    </p>
+
+    <!-- wax -->
+    <div class="process-row">
+      <section class="text-block card-one">
+        <h2>1. measure wax</h2>
+        <p>
+          Measure your wax based on how many candles you are making. For example, four 8 oz candles require 32 oz of wax.
+        </p>
+      </section>
+      <img src="Wax.png">
+    </div>
+
+    <!-- melt -->
+    <div class="process-row reverse">
+      <section class="text-block card-two">
+        <h2>2. melt wax</h2>
+        <p>
+          Melt the wax slowly to around 170°F. Do not overheat. Stir gently so it melts evenly.
+        </p>
+      </section>
+      <img src="Melted.png">
+    </div>
+
+    <!-- temp -->
+    <div class="process-row">
+      <section class="text-block card-three">
+        <h2>3. check temperature</h2>
+        <p>
+          Let the wax cool to around 160°F before adding fragrance. A thermometer is important here.
+        </p>
+      </section>
+      <img src="Temperature.png">
+    </div>
+
+    <!-- fragrance -->
+    <div class="process-row reverse">
+      <section class="text-block card-one">
+        <h2>4. add fragrance</h2>
+        <p>
+          Add 5–7% fragrance oil depending on how strong you want it. Stir for about 2 minutes.
+        </p>
+      </section>
+      <img src="Fragrance.png">
+    </div>
+
+    <!-- dye -->
+    <div class="process-row">
+      <section class="text-block card-two">
+        <h2>5. add dye (optional)</h2>
+        <p>
+          Add dye if desired and stir the same way as fragrance to fully combine it with the wax.
+        </p>
+      </section>
+      <img src="Dye.png">
+    </div>
+
+    <!-- moulds -->
+    <div class="process-row reverse">
+      <section class="text-block card-three">
+        <h2>6. make moulds</h2>
+        <p>
+          Pour wax into moulds like bunnies or hearts. Let them fully cool before removing.
+        </p>
+      </section>
+      <img src="Moulds.png">
+    </div>
+
+    <!-- final -->
+    <div class="process-row">
+      <section class="text-block card-one">
+        <h2>7. final candle</h2>
+        <p>
+          After the candle cures overnight, attach moulds by slightly melting their base and pressing them onto the top.
+        </p>
+      </section>
+      <img src="Final candle.png">
+    </div>
+
+    <p class="intro" style="margin-top:80px;">
+      If you encounter any problems during this process, visit the <a href="fixes.html">fixes page</a> for solutions.
+    </p>
+
+  </main>
+
+  <script src="candle.js"></script>
+
+</body>
+</html
