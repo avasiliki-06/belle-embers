@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Builder • Belle Embers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" href="candle-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="candle.css">
+
+  <style>
+    .builder-intro{
+      max-width:760px;
+      margin-top:22px;
+      font-size:20px;
+      line-height:1.6;
+    }
+
+    .builder-scene{
+      position:relative;
+      width:1330px;
+      min-height:1800px;
+      margin:0 auto;
+      padding:110px 80px 220px 220px;
+      transform-origin:top center;
+    }
+
+    .builder-box{
+      position:relative;
+      width:900px;
+      max-width:100%;
+      margin-top:50px;
+      padding:36px 32px 44px;
+    }
+
+    .builder-box::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:-1;
+      background-image:url("purpleindex.jpg");
+      background-size:cover;
+      background-position:center;
+      box-shadow:14px 14px 0 rgba(0,0,0,.08);
+      border-radius:18px;
+    }
+
+    .builder-box::before{
+      content:"";
+      position:absolute;
+      top:-14px;
+      left:18px;
+      width:60px;
+      height:60px;
+      background-image:url("silverpushpin.png");
+      background-size:contain;
+      background-repeat:no-repeat;
+    }
+
+    .builder-box h2{
+      font-family:"Playfair Display", serif;
+      font-size:32px;
+    }
+
+    .builder-controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+      margin:50px 0 30px;
+    }
+
+    .builder-controls button{
+      border:none;
+      background:none;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
+
+    .builder-controls button .topper-title{
+      font-family:"Playfair Display", serif;
+      font-size:16px;
+      font-weight:500;
+      color:#422f44;
+      text-align:center;
+    }
+
+    .builder-controls button img{
+      width:50px;
+      height:auto;
+      border-radius:12px;
+      border:none;
+      box-shadow:none;
+      transition:transform 0.2s;
+    }
+
+    .builder-controls button.active img{
+      transform:scale(1.12);
+      border:none;
+      box-shadow:none;
+    }
+
+    .builder-controls button:hover img{
+      transform:scale(1.08);
+    }
+
+    #clearBtn{
+      font-size:14px;
+      padding:14px 24px;
+      background:#d6bfd8;
+      font-weight:600;
+      border-radius:12px;
+      cursor:pointer;
+      margin-left:16px;
+    }
+
+    .builder-canvas-wrap{
+      display:flex;
+      justify-content:center;
+    }
+
+    .candle-top{
+      position:relative;
+      width:320px;
+      height:320px;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,.8), transparent 22%),
+        linear-gradient(180deg,#fff9f1 0%,#f0e3d7 100%);
+      box-shadow:
+        inset 0 0 0 16px rgba(235,225,214,.95),
+        inset 0 0 0 26px rgba(255,255,255,.45),
+        0 24px 32px rgba(0,0,0,.14);
+      cursor:crosshair;
+    }
+
+    .wax-surface{
+      position:absolute;
+      inset:28px;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 40% 35%, rgba(255,255,255,.6), transparent 24%),
+        linear-gradient(180deg,#fffaf2 0%,#f4e5d8 100%);
+    }
+
+    .top-wick{
+      position:absolute;
+      top:110px;
+      left:50%;
+      width:6px;
+      height:34px;
+      background:#2b1f1b;
+      transform:translateX(-50%);
+      border-radius:3px;
+      z-index:6;
+    }
+
+    .top-flame{
+      position:absolute;
+      top:78px;
+      left:50%;
+      width:22px;
+      height:30px;
+      transform:translateX(-50%);
+      border-radius:50% 50% 50% 50% / 65% 65% 35% 35%;
+      background:radial-gradient(circle at 50% 65%, #fff6d6, #ffd37a, #ff9c3a);
+      box-shadow:
+        0 0 10px #ffcf7a,
+        0 0 20px rgba(255,170,60,.45);
+      animation:flicker 1s infinite alternate;
+      z-index:7;
+    }
+
+    @keyframes flicker{
+      0%{transform:translateX(-50%) rotate(-2deg);}
+      100%{transform:translateX(-50%) rotate(2deg);}
+    }
+
+    .placed-topper{
+      position:absolute;
+      transform:translate(-50%, -50%);
+      pointer-events:none;
+    }
+
+    .placed-topper img{
+      display:block;
+      height:auto;
+    }
+
+    .placed-glitter{
+      position:absolute;
+      font-size:16px;
+      transform:translate(-50%, -50%);
+      pointer-events:none;
+      opacity:0.9;
+      filter:
+        drop-shadow(0 0 4px rgba(255,255,255,.9))
+        drop-shadow(0 0 6px rgba(255,220,180,.8));
+      animation:glitterTwinkle 1.8s infinite;
+    }
+
+    @keyframes glitterTwinkle{
+      0%{opacity:0.4; transform:translate(-50%, -50%) scale(.8);}
+      50%{opacity:1; transform:translate(-50%, -50%) scale(1.2);}
+      100%{opacity:0.5; transform:translate(-50%, -50%) scale(.9);}
+    }
+
+    @media (max-width: 900px){
+      .builder-scene{
+        width:100%;
+        min-height:auto;
+        margin:0;
+        padding:0;
+        transform:none !important;
+      }
+
+      .builder-box{
+        width:100%;
+        padding:28px 18px 32px;
+      }
+    }
+  </style>
+</head>
+
+<body class="builder-home">
+
+  <nav class="menu">
+    <div class="menu-left">
+      <a href="index.html">🏠 home</a>
+      <a href="about.html">✨ about</a>
+    </div>
+
+    <div class="menu-right">
+      <a href="builder.html" class="active">🎀 builder</a>
+      <a href="materials.html">📦 materials</a>
+      <a href="process.html">🕯️ process</a>
+      <a href="fixes.html">🛠️ fixes</a>
+    </div>
+  </nav>
+
+  <div class="left-candle">
+    <div id="taper" class="taper-wrap">
+      <div id="flame" class="flame"></div>
+
+      <div class="ember ember-one"></div>
+      <div class="ember ember-two"></div>
+      <div class="ember ember-three"></div>
+      <div class="ember ember-four"></div>
+
+      <img src="Candle drawing.svg" class="candle-img" alt="Candle drawing">
+      <div id="flameHalo" class="flame-halo"></div>
+    </div>
+  </div>
+
+  <main class="wall">
+    <div id="builderScene" class="builder-scene">
+
+      <h1 class="title">candle topper designer</h1>
+
+      <p class="builder-intro">Design your candle before making it.</p>
+      <p>Choose shapes and place them onto the wax to test your layout.</p>
+
+      <section class="builder-box">
+
+        <div class="builder-controls">
+          <button class="topper-btn active" data-topper="smallbunny.png" type="button">
+            <div class="topper-title">Mini Bunny</div>
+            <img src="smallbunny.png" alt="Mini Bunny topper">
+          </button>
+
+          <button class="topper-btn" data-topper="largebunny.png" type="button">
+            <div class="topper-title">Large Bunny</div>
+            <img src="largebunny.png" alt="Large Bunny topper">
+          </button>
+
+          <button class="topper-btn" data-topper="strawberry.png" type="button">
+            <div class="topper-title">Strawberry</div>
+            <img src="strawberry.png" alt="Strawberry topper">
+          </button>
+
+          <button class="topper-btn" data-topper="blueberry.png" type="button">
+            <div class="topper-title">Blueberry</div>
+            <img src="blueberry.png" alt="Blueberry topper">
+          </button>
+
+          <button class="topper-btn" data-topper="✨" type="button">
+            <div class="topper-title">Sparkle</div>
+            <div class="sparkle-icon">✨</div>
+          </button>
+
+          <button id="clearBtn" type="button">clear all 🗑️</button>
+        </div>
+
+        <div class="builder-canvas-wrap">
+          <div class="candle-top" id="candleTop">
+            <div class="wax-surface"></div>
+            <div class="top-wick"></div>
+            <div class="top-flame"></div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const candleTop = document.getElementById("candleTop");
+    const topperButtons = document.querySelectorAll(".topper-btn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    let currentTopper = "smallbunny.png";
+    let isGlitter = false;
+
+    topperButtons.forEach((btn) => {
+      btn.onclick = () => {
+        currentTopper = btn.dataset.topper;
+        isGlitter = currentTopper === "✨";
+        topperButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      };
+    });
+
+    candleTop.onclick = (e) => {
+      const rect = candleTop.getBoundingClientRect();
+      const item = document.createElement("div");
+
+      if (isGlitter) {
+        item.className = "placed-glitter";
+        item.textContent = "✨";
+      } else {
+        item.className = "placed-topper";
+        const img = document.createElement("img");
+        img.src = currentTopper;
+        img.alt = "";
+
+        if (currentTopper.includes("largebunny")) img.style.width = "140px";
+        else if (currentTopper.includes("smallbunny")) img.style.width = "130px";
+        else if (currentTopper.includes("strawberry")) img.style.width = "140px";
+        else if (currentTopper.includes("blueberry")) img.style.width = "130px";
+
+        img.style.height = "auto";
+        item.appendChild(img);
+      }
+
+      item.style.left = (e.clientX - rect.left) + "px";
+      item.style.top = (e.clientY - rect.top) + "px";
+
+      candleTop.appendChild(item);
+    };
+
+    clearBtn.onclick = () => {
+      document.querySelectorAll(".placed-topper, .placed-glitter").forEach((el) => el.remove());
+    };
+  </script>
+
+  <script src="candle.js"></script>
+</body>
+</html>

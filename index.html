@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- this is the title that shows on the browser tab -->
+  <title>Belle Embers</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- little icon in the browser tab -->
+  <!-- <link rel="icon" type="image/png" href="Candle icon .png"> -->
+
+  <!-- connecting to google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- importing playfair display font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+
+  <!-- linking my css file -->
+  <link rel="stylesheet" href="candle.css">
+</head>
+
+<body class="home">
+
+  <!-- navigation menu -->
+  <nav class="menu">
+    <div class="menu-left">
+      <a href="index.html" class="active">🏠 home</a>
+      <a href="about.html">✨ about</a>
+    </div>
+
+    <div class="menu-right">
+      <a href="builder.html">🎀 builder</a>
+      <a href="materials.html">📦 materials</a>
+      <a href="process.html">🕯️ process</a>
+      <a href="fixes.html">🛠️ fixes</a>
+    </div>
+  </nav>
+
+  <!-- this is my candle that stays on the left side of the screen -->
+  <div class="left-candle">
+    <div id="taper" class="taper-wrap">
+
+      <!-- flame -->
+      <div id="flame" class="flame"></div>
+
+      <!-- little glowing embers around the flame -->
+      <div class="ember ember-one"></div>
+      <div class="ember ember-two"></div>
+      <div class="ember ember-three"></div>
+      <div class="ember ember-four"></div>
+
+      <!-- candle drawing image -->
+      <img src="Candle drawing.svg" class="candle-img" alt="Candle drawing">
+
+      <!-- glow around the flame -->
+      <div id="flameHalo" class="flame-halo"></div>
+    </div>
+  </div>
+
+  <!-- main page content -->
+  <main class="wall">
+    <div id="scene" class="scene">
+
+      <!-- main title -->
+      <h1 class="title">Belle Embers</h1>
+
+      <!-- intro text -->
+      <p class="intro">
+        An archive, guide, and experimentation of candle making.
+      </p>
+
+      <p>
+        The process and the feeling, the quiet glow, the halo of light, and the beginning of my own candle business.
+      </p>
+
+      <!-- large room image -->
+      <img src="Room.jpg" class="room" alt="Belle Embers room scene">
+
+      <!-- information cards -->
+      <a href="materials.html" class="card-link">
+        <section class="text-block card-one">
+          <h2>materials</h2>
+          <p>wax • jars • wicks • fragrance • thermometer • scale • moulds</p>
+        </section>
+      </a>
+
+      <a href="process.html" class="card-link">
+        <section class="text-block card-two">
+          <h2>process</h2>
+          <p>measure → melt → add fragrance → pour → cure → top with moulds</p>
+        </section>
+      </a>
+
+      <a href="fixes.html" class="card-link">
+        <section class="text-block card-three">
+          <h2>fixes</h2>
+          <p>tunneling • frosting • wet spots • sinkholes • rough tops</p>
+        </section>
+      </a>
+
+      <!-- hanging decorative drawings -->
+      <div class="hanging-piece piece-one">
+        <span class="piece-string"></span>
+        <img src="Jarbunny.png" alt="Jar bunny drawing">
+      </div>
+
+      <div class="hanging-piece piece-two">
+        <span class="piece-string"></span>
+        <img src="Belle embers.png" alt="Belle Embers drawing">
+      </div>
+
+      <!-- sparkles that appear as you scroll -->
+      <div class="sparkle sparkle-one"></div>
+      <div class="sparkle sparkle-two"></div>
+      <div class="sparkle sparkle-three"></div>
+      <div class="sparkle sparkle-four"></div>
+      <div class="sparkle sparkle-five"></div>
+      <div class="sparkle sparkle-six"></div>
+
+    </div>
+  </main>
+
+  <!-- footer -->
+  <footer class="footer">
+    Belle Embers • candle process archive
+  </footer>
+
+  <!-- linking my javascript -->
+  <script src="candle.js"></script>
+</body>
+</html>

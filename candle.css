@@ -1,0 +1,918 @@
+:root{
+  /* these are my main site colours so I can reuse them */
+  --butter:#eee3c1;
+  --olive:#7f8b4a;
+  --ink:#423944;
+
+  /* shadow and paper shape used on my cards */
+  --paper-shadow:14px 14px 0 rgba(0,0,0,.08);
+  --paper-shape:polygon(
+    0% 6%, 3% 2%, 97% 3%, 100% 6%,
+    98% 96%, 95% 100%, 3% 99%, 0% 96%
+  );
+}
+
+*{
+  /* makes padding and border easier to control */
+  box-sizing:border-box;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
+}
+
+body{
+  /* general font and page background */
+  font-family:"Comfortaa",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 12% 22%, rgba(255,210,150,.35), transparent 28%),
+    radial-gradient(circle at 18% 30%, rgba(255,185,120,.22), transparent 35%),
+    linear-gradient(180deg,#f3e6c9 0%,#e9d3ef 55%,#ddb7e7 100%);
+}
+
+/* ---------------- menu ---------------- */
+
+.menu{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 30px;
+  background:rgba(243,234,216,.92);
+  backdrop-filter:blur(6px);
+  z-index:2000;
+}
+
+.menu-left,
+.menu-right{
+  display:flex;
+  gap:22px;
+}
+
+.menu a{
+  position:relative;
+  color:var(--ink);
+  text-decoration:none;
+  font-family:"Playfair Display",serif;
+  font-size:20px;
+  padding:6px 14px;
+  border-radius:999px;
+  transition:all 0.25s ease;
+}
+
+/* subtle hover */
+.menu a:hover{
+  background:rgba(210,180,230,0.25);
+}
+
+/* ---------------- shared page layout ---------------- */
+
+.wall{
+  position:relative;
+  max-width:1100px;
+  min-height:240vh;
+  margin:0 auto;
+  padding:110px 80px 200px 150px;
+}
+
+.info-wall{
+  min-height:auto;
+}
+
+.title{
+  margin:0;
+  font-family:"Playfair Display",serif;
+  font-size:56px;
+  font-weight:500;
+  text-shadow:2px 2px 0 rgb(207,174,225);
+  transform:rotate(-1deg);
+}
+
+.intro{
+  max-width:640px;
+  margin-top:20px;
+  font-size:18px;
+  line-height:1.6;
+}
+
+/* ---------------- home and about scene scaling ---------------- */
+
+body.home .wall,
+body.about-home .wall,
+body.builder-home .wall{
+  width:100%;
+  max-width:none;
+  min-height:0;
+  margin:0;
+  padding-left:150px;
+}
+
+.scene,
+.about-scene,
+.builder-scene{
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  transform-origin:top center;
+}
+
+.scene{
+  width:1330px;
+  min-height:2550px;
+  padding:110px 80px 260px 150px;
+}
+
+.about-scene{
+  width:1330px;
+  min-height:1800px;
+  padding:110px 80px 220px 150px;
+}
+
+.builder-scene{
+  width:1330px;
+  min-height:1800px;
+  padding:110px 80px 220px 150px;
+}
+
+/* ---------------- left candle ---------------- */
+
+.left-candle{
+  position:fixed;
+  top:0;
+  left:-50px;
+  height:100vh;
+  pointer-events:none;
+  z-index:999;
+}
+
+.taper-wrap{
+  position:absolute;
+  top:-30px;
+  left:0;
+  width:140px;
+}
+
+.candle-img{
+  width:280px;
+}
+
+/* flame styling */
+.flame{
+  position:absolute;
+  top:113px;
+  left:107px;
+  width:26px;
+  height:46px;
+  transform:translateX(-50%);
+  border-radius:50% 50% 50% 50% / 65% 65% 35% 35%;
+  background:radial-gradient(circle at 50% 65%, #fff6d6, #ffd37a, #ff9c3a);
+  box-shadow:
+    0 0 10px #ffcf7a,
+    0 0 25px rgba(255,170,60,.6),
+    0 0 45px rgba(255,140,40,.4);
+  animation:flicker .8s infinite alternate;
+}
+
+/* flame animation */
+@keyframes flicker{
+  0%{transform:translateX(-50%) rotate(-2deg) scaleY(.96);}
+  50%{transform:translateX(-50%) rotate(2deg) scaleY(1.04);}
+  100%{transform:translateX(-50%) rotate(-1deg) scaleY(.98);}
+}
+
+/* soft glow around the flame */
+.flame-halo{
+  position:fixed;
+  top:92px;
+  left:82px;
+  width:170px;
+  height:170px;
+  pointer-events:none;
+  z-index:2;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,
+      rgba(255,220,165,.30) 0%,
+      rgba(255,185,110,.16) 35%,
+      rgba(255,160,90,.07) 55%,
+      rgba(255,160,90,0) 75%
+    );
+  filter:blur(22px);
+  mix-blend-mode:screen;
+}
+
+/* ---------------- embers ---------------- */
+
+.ember{
+  position:absolute;
+  width:8px;
+  height:8px;
+  opacity:0;
+  border-radius:50%;
+  background:radial-gradient(circle,#ffd47a 0%,#ff9e3a 60%,transparent);
+  filter:drop-shadow(0 0 10px rgba(255,170,80,.8));
+  animation:emberRise 7s linear infinite;
+}
+
+.ember-one{left:108px;top:118px;}
+.ember-two{left:114px;top:120px;animation-delay:2s;}
+.ember-three{left:104px;top:122px;animation-delay:4s;}
+.ember-four{left:110px;top:119px;animation-delay:6s;}
+
+@keyframes emberRise{
+  0%{
+    transform:translateY(0) scale(.6);
+    opacity:0;
+  }
+  15%{
+    opacity:1;
+  }
+  60%{
+    transform:translateY(-120px) translateX(20px) scale(.9);
+  }
+  100%{
+    transform:translateY(-240px) translateX(-10px) scale(.5);
+    opacity:0;
+  }
+}
+
+/* ---------------- room image ---------------- */
+.room{
+  width:760px;
+  display:block;
+  margin:40px auto 30px auto;
+  border-radius:18px;
+  transform:rotate(-1deg);
+  box-shadow:14px 14px 0 rgba(0,0,0,.08);
+}
+
+/* ---------------- paper cards ---------------- */
+
+.text-block,
+.about-card{
+  position:relative;
+}
+
+.text-block::after,
+.about-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background-image:url("purpleindex.jpg");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  box-shadow:var(--paper-shadow);
+  clip-path:var(--paper-shape);
+}
+
+.text-block::before,
+.about-card::before{
+  content:"";
+  position:absolute;
+  background-image:url("silverpushpin.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+}
+
+.text-block{
+  width:620px;
+  max-width:620px;
+  margin-top:80px;
+  padding:56px 52px;
+}
+
+.text-block::before{
+  top:-18px;
+  width:70px;
+  height:70px;
+}
+
+.text-block h2{
+  margin:0 0 14px 0;
+  font-family:"Playfair Display",serif;
+  font-size:34px;
+  font-weight:500;
+}
+
+.text-block p{
+  margin:0;
+  font-size:21px;
+  line-height:1.6;
+}
+
+/* slightly different card positions so it feels scrapbook-like */
+.card-one{
+  margin-top:90px;
+  margin-left:40px;
+  transform:rotate(-2deg);
+}
+
+.card-two{
+  margin-top:60px;
+  margin-left:90px;
+  transform:rotate(1.5deg);
+}
+
+.card-three{
+  margin-top:60px;
+  margin-left:55px;
+  transform:rotate(-1deg);
+}
+
+/* home page hover effect */
+body.home .text-block{
+  cursor:pointer;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+body.home .text-block:hover{
+  transform:translateY(-6px) rotate(0deg) scale(1.02);
+}
+
+/* make whole home cards clickable */
+.card-link{
+  display:block;
+  width:fit-content;
+  max-width:100%;
+  text-decoration:none;
+  color:inherit;
+}
+
+body.home .card-link:hover .text-block{
+  transform:translateY(-6px) rotate(0deg) scale(1.02);
+}
+
+/* ---------------- about page ---------------- */
+
+/* main photo */
+.about-hero{
+  width:760px;
+  display:block;
+  margin:40px auto 30px auto;
+  border-radius:18px;
+  transform:rotate(-1deg);
+  box-shadow:14px 14px 0 rgba(0,0,0,.08);
+}
+
+/* intro paper block */
+.about-intro-block{
+  position:relative;
+  max-width:760px;
+  margin:0 auto;
+  padding:44px 44px 36px;
+  transform:rotate(-1deg);
+}
+
+.about-intro-block::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url("purpleindex.jpg");
+  background-size:cover;
+  background-position:center;
+  box-shadow:14px 14px 0 rgba(0,0,0,.08);
+  clip-path:polygon(
+    0% 6%,3% 2%,97% 3%,100% 6%,
+    98% 96%,95% 100%,3% 99%,0% 96%
+  );
+  z-index:-1;
+}
+
+.about-intro-block::before{
+  content:"";
+  position:absolute;
+  top:-14px;
+  left:18px;
+  width:60px;
+  height:60px;
+  background-image:url("silverpushpin.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+}
+
+.about-intro{
+  margin:0 0 18px 0;
+  font-size:18px;
+  line-height:1.8;
+}
+
+.about-intro:last-child{
+  margin-bottom:0;
+}
+
+/* grid of cards */
+.about-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:44px;
+  max-width:1000px;
+  margin:70px auto 0 auto;
+  position:relative;
+}
+
+.about-card{
+  min-height:220px;
+  padding:44px 40px;
+  position:relative;
+}
+
+.about-card:nth-child(1){ transform:rotate(-1.2deg); }
+.about-card:nth-child(2){ transform:rotate(.9deg); }
+.about-card:nth-child(3){ transform:rotate(-.8deg); }
+.about-card:nth-child(4){ transform:rotate(1.1deg); }
+
+.about-card h2{
+  margin:0 0 16px 0;
+  font-family:"Playfair Display",serif;
+  font-size:34px;
+}
+
+.about-card p{
+  margin:0;
+  font-size:18px;
+  line-height:1.7;
+}
+
+/* jar overlaps the about section */
+.about-jar{
+  position:absolute;
+  right:100px;
+  top:685px;
+  width:240px;
+  transform:rotate(10deg);
+  z-index:50;
+  filter:drop-shadow(10px 14px 18px rgba(0,0,0,.25));
+  pointer-events:none;
+}
+
+/* ---------------- hanging pieces ---------------- */
+
+.hanging-piece{
+  position:absolute;
+  z-index:20;
+  opacity:0;
+  pointer-events:none;
+  transition:
+    opacity 1.1s ease,
+    transform 1.1s cubic-bezier(.2,.8,.2,1);
+}
+
+.hanging-piece img{
+  display:block;
+  width:270px;
+  height:auto;
+  filter:drop-shadow(10px 14px 18px rgba(0,0,0,.22));
+  transform-origin:top center;
+  animation:gentleSwing 4s ease-in-out infinite;
+}
+
+.piece-string{
+  position:absolute;
+  z-index:10;
+  width:3px;
+  background:linear-gradient(
+    to bottom,
+    rgba(199,147,104,0.65),
+    rgba(163,156,149,0.85)
+  );
+}
+
+.piece-one{
+  top:1420px;
+  right:10px;
+  transform:translateY(-260px) rotate(-14deg) scale(.98);
+}
+
+.piece-one .piece-string{
+  top:-165px;
+  left:34%;
+  height:145px;
+  transform:translateX(-50%);
+}
+
+.piece-two{
+  top:1840px;
+  right:230px;
+  transform:translateY(250px) rotate(14deg) scale(.92);
+}
+
+.piece-two .piece-string{
+  top:-700px;
+  left:64%;
+  height:660px;
+  transform:translateX(-50%);
+}
+
+.hanging-piece.show{
+  opacity:1;
+}
+
+.piece-one.show{
+  transform:translateY(0) rotate(-7deg) scale(1);
+}
+
+.piece-two.show{
+  transform:translateY(0) rotate(7deg) scale(1);
+}
+
+@keyframes gentleSwing{
+  0%{transform:rotate(-6deg);}
+  50%{transform:rotate(6deg);}
+  100%{transform:rotate(-6deg);}
+}
+
+/* ---------------- builder buttons ---------------- */
+
+.builder-controls button{
+  border:2px solid transparent;
+  background:#f6ecf6;
+  border-radius:12px;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 16px;
+  min-width:100px;
+  min-height:100px;
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+}
+
+.builder-controls button:hover{
+  transform:translateY(-2px);
+}
+
+.builder-controls button.active{
+  border:2px solid rgba(66,57,68,.55);
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  background:#ead8ec;
+}
+
+.builder-controls button.active img{
+  border:none !important;
+  box-shadow:none !important;
+}
+
+.builder-controls button.active .sparkle-icon{
+  transform:scale(1.2);
+}
+
+.sparkle-icon{
+  font-size:34px;
+  line-height:1;
+  transition:transform 0.2s;
+}
+
+#clearBtn{
+  font-family:"Playfair Display",serif;
+  font-size:16px;
+  font-weight:500;
+}
+
+/* ---------------- sparkles ---------------- */
+
+.sparkle{
+  position:absolute;
+  opacity:0;
+  background:radial-gradient(circle,#ffe6a8 0%,#ffc46b 45%,#ff9e45 70%,transparent);
+  clip-path:polygon(
+    50% 0%,
+    61% 35%,
+    100% 50%,
+    61% 65%,
+    50% 100%,
+    39% 65%,
+    0% 50%,
+    39% 35%
+  );
+  filter:drop-shadow(0 0 10px rgba(255,200,120,.45));
+  transition:opacity .8s ease;
+  animation:sparkleFloat 10s ease-in-out infinite;
+}
+
+.sparkle.show{
+  opacity:1;
+}
+
+.sparkle-one{top:1380px;right:210px;width:20px;height:20px;}
+.sparkle-two{top:1460px;right:95px;width:14px;height:14px;}
+.sparkle-three{top:1570px;right:300px;width:22px;height:22px;}
+.sparkle-four{top:1755px;right:250px;width:12px;height:12px;}
+.sparkle-five{top:1850px;right:430px;width:18px;height:18px;}
+.sparkle-six{top:1940px;right:220px;width:16px;height:16px;}
+
+@keyframes sparkleFloat{
+  0%{transform:translateY(0) scale(.9);}
+  50%{transform:translateY(-20px) scale(1);}
+  100%{transform:translateY(-40px) scale(.9);}
+}
+
+.home-hero{
+  width:760px;
+  display:block;
+  margin:40px auto 30px auto;
+  border-radius:18px;
+  transform:rotate(-1deg);
+  box-shadow:14px 14px 0 rgba(0,0,0,.08);
+}
+
+/* ---------------- footer ---------------- */
+
+.footer{
+  position:relative;
+  padding:120px 20px 60px;
+  text-align:center;
+  font-size:14px;
+  opacity:.7;
+}
+
+@media (max-width: 600px){
+
+  .menu{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+    padding:12px 16px;
+  }
+
+  .menu-left,
+  .menu-right{
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  .menu a{
+    font-size:15px;
+    padding:4px 10px;
+  }
+
+}
+
+/* ---------------- FIX NON-SCALED PAGES ---------------- */
+
+@media (max-width: 768px){
+
+  /* general page spacing */
+  .wall{
+    padding:140px 20px 80px 20px;
+  }
+
+  .title{
+    font-size:34px;
+  }
+
+  .intro{
+    font-size:16px;
+    max-width:100%;
+  }
+
+  /* cards shrink properly */
+  .text-block{
+    width:100%;
+    max-width:100%;
+    padding:30px 22px;
+  }
+
+  .text-block h2{
+    font-size:26px;
+  }
+
+  .text-block p{
+    font-size:16px;
+  }
+
+  /* remove sideways offsets */
+  .card-one,
+  .card-two,
+  .card-three{
+    margin-left:0;
+  }
+
+  /* process page rows stack */
+  .process-row{
+    flex-direction:column !important;
+    align-items:flex-start;
+  }
+
+  .process-row img{
+    width:140px;
+  }
+
+  /* builder page */
+  .builder-controls{
+    justify-content:center;
+  }
+
+  .candle-top{
+    width:260px;
+    height:260px;
+  }
+
+}
+
+/* keep content clear of the candle on all pages */
+.wall{
+  padding-left:220px; /* was ~150px */
+}
+
+.left-candle{
+  left:-70px;
+}
+
+@media (max-width: 900px){
+
+  body.builder-home .wall{
+    width:100%;
+    max-width:none;
+    min-height:auto;
+    margin:0;
+    padding:140px 20px 80px 20px;
+  }
+
+  .builder-scene{
+    position:relative;
+    top:auto;
+    left:auto;
+    width:100%;
+    min-height:auto;
+    padding:0;
+    transform:none !important;
+  }
+
+  .builder-box{
+    width:100%;
+    max-width:100%;
+    padding:28px 18px 32px;
+  }
+
+  .builder-intro{
+    max-width:100%;
+    font-size:16px;
+    line-height:1.6;
+  }
+
+  .builder-controls{
+    justify-content:center;
+    gap:10px;
+    margin:30px 0 24px;
+  }
+
+  .builder-controls button{
+    min-width:86px;
+    min-height:86px;
+    padding:10px 12px;
+  }
+
+  .builder-controls button .topper-title{
+    font-size:13px;
+  }
+
+  .builder-controls button img{
+    width:40px;
+  }
+
+  #clearBtn{
+    margin-left:0;
+    margin-top:4px;
+  }
+
+  .builder-canvas-wrap{
+    width:100%;
+  }
+
+  .candle-top{
+    width:260px;
+    height:260px;
+  }
+
+  .top-wick{
+    top:92px;
+    height:30px;
+  }
+
+  .top-flame{
+    top:62px;
+  }
+
+  body.about-home .wall{
+    width:100%;
+    max-width:none;
+    min-height:auto !important;
+    height:auto !important;
+    margin:0;
+    padding:180px 20px 120px 20px !important;
+  }
+
+  .about-scene{
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    width:100% !important;
+    min-height:auto !important;
+    height:auto !important;
+    padding:0 0 80px 0 !important;
+    transform:none !important;
+    overflow:visible !important;
+  }
+
+  body.about-home .title{
+    font-size:34px;
+    margin-top:0;
+  }
+
+  .about-hero{
+    width:100%;
+    max-width:100%;
+  }
+
+  .about-intro-block{
+    max-width:100%;
+    padding:30px 22px;
+    transform:none;
+  }
+
+  .about-intro{
+    font-size:16px;
+    line-height:1.7;
+  }
+
+  .about-grid{
+    grid-template-columns:1fr;
+    gap:26px;
+    margin-top:40px;
+  }
+
+  .about-card{
+    min-height:auto;
+    transform:none !important;
+    padding:30px 22px;
+  }
+
+  .about-card h2{
+    font-size:26px;
+  }
+
+  .about-card p{
+    font-size:16px;
+  }
+
+  .about-jar{
+    display:none;
+  }
+
+  body.home .wall{
+    width:100%;
+    max-width:none;
+    min-height:auto !important;
+    height:auto !important;
+    margin:0;
+    padding:180px 20px 120px 20px !important;
+  }
+
+  .scene{
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    width:100% !important;
+    min-height:auto !important;
+    height:auto !important;
+    padding:0 0 80px 0 !important;
+    transform:none !important;
+    overflow:visible !important;
+  }
+
+  .room{
+    width:100%;
+    max-width:100%;
+  }
+
+  .hanging-piece,
+  .sparkle{
+    display:none;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1400px){
+  body.builder-home .wall{
+    padding-left:210px;
+  }
+
+  .builder-scene{
+    padding-left:210px;
+  }
+}
